@@ -1,4 +1,156 @@
-﻿;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+﻿;////////////////////////////////////////////////
+;///////////// Class MemoryFileIO ///////////////
+;////////////////////////////////////////////////
+;;; Provides Input/Output File Object syntax for in-memory files.
+;;; Usage is very similar to the File Object syntax: 
+;;; 	https://autohotkey.com/docs/objects/File.htm
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;; New MemoryFileIO() ;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Creates a new instance of the class.
+;;; Syntax:  Instance := New MemoryFileIO(InputVar, [VarSize, DefaultEncoding])
+;;; Pass it the variable (directly or by address) you will be performing
+;;; 	file I/O operations on.  DefaultEncoding defaults to A_FileEncoding.
+;;; The MemoryFileIO class will bound all reads/writes to the
+;;; 	memory already allocated to the variable upon creating
+;;; 	the new instance of the class.  Use VarSetCapacity()
+;;; 	to initialize enough memory for your needs BEFORE creating
+;;; 	a new MemoryFileIO instance with your variable.
+;;; This class will raise an exception on error.
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;; Read ;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Reads a string of characters from the file and advances the file pointer.
+;;; Syntax:  String := Instance.Read([Characters, Encoding = None])
+;;; Characters:	The maximum number of characters to read. If omitted, 
+;;;		the rest of the file is read and returned as one string.
+;;; Encoding: The source encoding; for example, "UTF-8", "UTF-16" or "CP936".
+;;;		Specify an empty string or "CP0" to use the system default ANSI code page.
+;;; Returns: A string.
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;; Write ;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Writes a string of characters to the file and advances the file pointer.
+;;; Syntax:  NumWritten := Instance.Write(String [, Characters, Encoding])
+;;; String: A string.
+;;; Characters: The maximum number of characters to write. If omitted, 
+;;;		all of String is written.
+;;; Encoding: The target encoding; for example, "UTF-8", "UTF-16" or "CP936".
+;;;		Specify an empty string or "CP0" to use the system default ANSI code page.
+;;; Returns: The number of bytes (not characters) that were written.
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;; ReadNum ;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Reads a number from the file and advances the file pointer.
+;;; Syntax:  Num := Instance.ReadNumType()
+;;; NumType: One of the following specified directly as part of the method name:
+;;; 	UInt, Int, Int64, Short, UShort, Char, UChar, Double, Float, Ptr, UPtr
+;;; 	DWORD, Long, WORD, or BYTE
+;;; Returns: A number if successful.
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;; WriteNum ;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Writes a number to the file and advances the file pointer.
+;;; Syntax:  Instance.WriteNumType(Num)
+;;; NumType: One of the following specified directly as part of the method name:
+;;; 	UInt, Int, Int64, Short, UShort, Char, UChar, Double, Float, Ptr, UPtr
+;;; 	DWORD, Long, WORD, or BYTE
+;;; Num: A number.
+;;; Returns: The number of bytes that were written. For instance, WriteUInt 
+;;; 	returns 4 if successful.
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;; RawRead ;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Copies raw binary data from the file to another memory address or variable.
+;;; 	If a var is specified, it is expanded automatically when necessary.
+;;; 	If a var is specified that contains only an integer, that integer is 
+;;; 	considered the address.
+;;; Syntax:  Instance.RawRead(VarOrAddress, Bytes)
+;;; VarOrAddress: A variable or memory address to which the data will be copied.
+;;; Bytes: The maximum number of bytes to read.
+;;; Returns: The number of bytes that were read.
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;; RawWrite ;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Write raw binary data to the file from another memory address or variable.
+;;; 	If a var is specified that contains only an integer, that integer is 
+;;; 	considered the address.  If VarOrAddress is a variable and Bytes is
+;;; 	greater than the capacity of VarOrAddress, Bytes is reduced to the capacity
+;;; 	of VarOrAddress.
+;;; Syntax:  Instance.RawWrite(VarOrAddress, Bytes)
+;;; VarOrAddress: A variable containing the data or the address of the data 
+;;; 	in memory.
+;;; Bytes: The number of bytes to write.
+;;; Returns: The number of bytes that were written.
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;; Seek ;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Moves the file pointer.
+;;; Syntax:	Instance.Seek(Distance [, Origin])
+;;; 	Instance.Position := Distance
+;;; 	Instance.Pos := Distance
+;;; Distance: Distance to move, in bytes. Lower values are closer to the 
+;;; 	beginning of the file.
+;;; Origin: Starting point for the file pointer move. Must be one of the following:
+;;; 	0 (SEEK_SET): Beginning of the file. Distance must be zero or greater.
+;;; 	1 (SEEK_CUR): Current position of the file pointer.
+;;; 	2 (SEEK_END): End of the file. Distance should usually be negative.
+;;; 	If omitted, Origin defaults to SEEK_END when Distance is negative 
+;;; 	and SEEK_SET otherwise.
+;;; Returns one of the following values:
+;;; 	-1 : Pointer was instructed to move before beginning of file.
+;;; 		 Automatically moved to beginning of file instead.
+;;; 	1  : Pointer is still in bounds or if EoF was reached.
+;;; 	2  : Pointer was instructed to move past EoF.
+;;; 		 Automatically moved to EoF instead.
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;; Tell ;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Syntax:	Pos := Instance.Tell()
+;;; 	Pos := Instance.Position
+;;; 	Pos := Instance.Pos
+;;; Returns: The current position of the file pointer, where 0 is the 
+;;; 	beginning of the file.
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;; Length ;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Retrieves the size of the file.  Setting a new size is not supported.
+;;; Syntax:	FileSize := Instance.Length
+;;; Returns: 	The size of the file, in bytes.
+;;; 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;; AtEOF ;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Syntax:	IsAtEOF := Instance.AtEOF
+;;; Returns: A non-zero value if the file pointer has reached the 
+;;; 	end of the file, otherwise zero.
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;; Encoding ;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Retrieves or sets the text encoding used by this method.
+;;; Encoding defaults to A_FileEncoding which defaults to the system 
+;;; 	default ANSI code page ("CP0") if not specified.
+;;; Syntax:	Encoding := Instance.Encoding
+;;; 		Instance.Encoding := Encoding
+;;; Encoding: 	A numeric code page identifier (see MSDN) or 
+;;; 	one of the following strings:
+;;; 	UTF-8: Unicode UTF-8, equivalent to CP65001.
+;;; 	UTF-16: Unicode UTF-16 with little endian byte order, equivalent to CP1200.
+;;; 	CPnnn: a code page with numeric identifier nnn.
+;;; Setting Encoding never causes a BOM to be added or removed.
+;;; 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;; NumTypes ;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;; Name      Size    Alias ;;;;;;;;;;;;
@@ -16,7 +168,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Declare class:
 Class MemoryFileIO{
-	__New(ByRef InputVar, VarSize:=""){
+	__New(ByRef InputVar, VarSize:="", DefaultEncoding:=""){
 		If InputVar is not integer ; Is a Variable not an Address
 			this.Address:=&InputVar
 		Else
@@ -24,7 +176,7 @@ Class MemoryFileIO{
 		this.Position:=0
 		this.Length:=(VarSize=""?VarSetCapacity(InputVar):VarSize)
 		this.AtEOF:=0
-		this.Encoding:=A_FileEncoding
+		this.Encoding:=(DefaultEncoding=""?A_FileEncoding:DefaultEncoding)
 		}
 	ReadUInt(){
 		If (this.Position+4>this.Length) OR ((Num:=NumGet(this.Address+0, this.Position, "UInt"))="")
