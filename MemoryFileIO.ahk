@@ -27,122 +27,182 @@ Class MemoryFileIO{
 		this.Encoding:=A_FileEncoding
 		}
 	ReadUInt(){
-		Num:=NumGet(this.Address+0, this.Position, "UInt"), this.Position+=4
+		If (this.Position+4>this.Length) OR ((Num:=NumGet(this.Address+0, this.Position, "UInt"))="")
+			throw { what: (IsFunc(A_ThisFunc)?"function: " A_ThisFunc "()":"") A_Tab (IsLabel(A_ThisLabel)?"label: " A_ThisLabel:""), file: A_LineFile, line: A_LineNumber, message: "Invalid memory read.", extra: "Val='" Num "' at offset " this.Position " of " this.Length-1}
+		this.Position+=4
 		Return Num
 	}
 	ReadDWORD(){
-		Num:=NumGet(this.Address+0, this.Position, "UInt"), this.Position+=4
+		If (this.Position+4>this.Length) OR ((Num:=NumGet(this.Address+0, this.Position, "UInt"))="")
+			throw { what: (IsFunc(A_ThisFunc)?"function: " A_ThisFunc "()":"") A_Tab (IsLabel(A_ThisLabel)?"label: " A_ThisLabel:""), file: A_LineFile, line: A_LineNumber, message: "Invalid memory read.", extra: "Val='" Num "' at offset " this.Position " of " this.Length-1}
+		this.Position+=4
 		Return Num
 	}
 	ReadInt(){
-		Num:=NumGet(this.Address+0, this.Position, "Int"), this.Position+=4
+		If (this.Position+4>this.Length) OR ((Num:=NumGet(this.Address+0, this.Position, "Int"))="")
+			throw { what: (IsFunc(A_ThisFunc)?"function: " A_ThisFunc "()":"") A_Tab (IsLabel(A_ThisLabel)?"label: " A_ThisLabel:""), file: A_LineFile, line: A_LineNumber, message: "Invalid memory read.", extra: "Val='" Num "' at offset " this.Position " of " this.Length-1}
+		this.Position+=4
 		Return Num
 	}
 	ReadLong(){
-		Num:=NumGet(this.Address+0, this.Position, "Int"), this.Position+=4
+		If (this.Position+4>this.Length) OR ((Num:=NumGet(this.Address+0, this.Position, "Int"))="")
+			throw { what: (IsFunc(A_ThisFunc)?"function: " A_ThisFunc "()":"") A_Tab (IsLabel(A_ThisLabel)?"label: " A_ThisLabel:""), file: A_LineFile, line: A_LineNumber, message: "Invalid memory read.", extra: "Val='" Num "' at offset " this.Position " of " this.Length-1}
+		this.Position+=4
 		Return Num
 	}
 	ReadInt64(){
-		Num:=NumGet(this.Address+0, this.Position, "Int64"), this.Position+=8
+		If (this.Position+8>this.Length) OR ((Num:=NumGet(this.Address+0, this.Position, "Int64"))="")
+			throw { what: (IsFunc(A_ThisFunc)?"function: " A_ThisFunc "()":"") A_Tab (IsLabel(A_ThisLabel)?"label: " A_ThisLabel:""), file: A_LineFile, line: A_LineNumber, message: "Invalid memory read.", extra: "Val='" Num "' at offset " this.Position " of " this.Length-1}
+		this.Position+=8
 		Return Num
 	}
 	ReadShort(){
-		Num:=NumGet(this.Address+0, this.Position, "Short"), this.Position+=2
+		If (this.Position+2>this.Length) OR ((Num:=NumGet(this.Address+0, this.Position, "Short"))="")
+			throw { what: (IsFunc(A_ThisFunc)?"function: " A_ThisFunc "()":"") A_Tab (IsLabel(A_ThisLabel)?"label: " A_ThisLabel:""), file: A_LineFile, line: A_LineNumber, message: "Invalid memory read.", extra: "Val='" Num "' at offset " this.Position " of " this.Length-1}
+		this.Position+=2
 		Return Num
 	}
 	ReadUShort(){
-		Num:=NumGet(this.Address+0, this.Position, "UShort"), this.Position+=2
+		If (this.Position+2>this.Length) OR ((Num:=NumGet(this.Address+0, this.Position, "UShort"))="")
+			throw { what: (IsFunc(A_ThisFunc)?"function: " A_ThisFunc "()":"") A_Tab (IsLabel(A_ThisLabel)?"label: " A_ThisLabel:""), file: A_LineFile, line: A_LineNumber, message: "Invalid memory read.", extra: "Val='" Num "' at offset " this.Position " of " this.Length-1}
+		this.Position+=2
 		Return Num
 	}
 	ReadWORD(){
-		Num:=NumGet(this.Address+0, this.Position, "UShort"), this.Position+=2
+		If (this.Position+2>this.Length) OR ((Num:=NumGet(this.Address+0, this.Position, "UShort"))="")
+			throw { what: (IsFunc(A_ThisFunc)?"function: " A_ThisFunc "()":"") A_Tab (IsLabel(A_ThisLabel)?"label: " A_ThisLabel:""), file: A_LineFile, line: A_LineNumber, message: "Invalid memory read.", extra: "Val='" Num "' at offset " this.Position " of " this.Length-1}
+		this.Position+=2
 		Return Num
 	}
 	ReadChar(){
-		Num:=NumGet(this.Address+0, this.Position, "Char"), this.Position++
+		If (this.Position+1>this.Length) OR ((Num:=NumGet(this.Address+0, this.Position, "Char"))="")
+			throw { what: (IsFunc(A_ThisFunc)?"function: " A_ThisFunc "()":"") A_Tab (IsLabel(A_ThisLabel)?"label: " A_ThisLabel:""), file: A_LineFile, line: A_LineNumber, message: "Invalid memory read.", extra: "Val='" Num "' at offset " this.Position " of " this.Length-1}
+		this.Position++
 		Return Num
 	}
 	ReadUChar(){
-		Num:=NumGet(this.Address+0, this.Position, "UChar"), this.Position++
+		If (this.Position+1>this.Length) OR ((Num:=NumGet(this.Address+0, this.Position, "UChar"))="")
+			throw { what: (IsFunc(A_ThisFunc)?"function: " A_ThisFunc "()":"") A_Tab (IsLabel(A_ThisLabel)?"label: " A_ThisLabel:""), file: A_LineFile, line: A_LineNumber, message: "Invalid memory read.", extra: "Val='" Num "' at offset " this.Position " of " this.Length-1}
+		this.Position++
 		Return Num
 	}
 	ReadBYTE(){
-		Num:=NumGet(this.Address+0, this.Position, "UChar"), this.Position++
+		If (this.Position+1>this.Length) OR ((Num:=NumGet(this.Address+0, this.Position, "UChar"))="")
+			throw { what: (IsFunc(A_ThisFunc)?"function: " A_ThisFunc "()":"") A_Tab (IsLabel(A_ThisLabel)?"label: " A_ThisLabel:""), file: A_LineFile, line: A_LineNumber, message: "Invalid memory read.", extra: "Val='" Num "' at offset " this.Position " of " this.Length-1}
+		this.Position++
 		Return Num
 	}
 	ReadDouble(){
-		Num:=NumGet(this.Address+0, this.Position, "Double"), this.Position+=8
+		If (this.Position+8>this.Length) OR ((Num:=NumGet(this.Address+0, this.Position, "Double"))="")
+			throw { what: (IsFunc(A_ThisFunc)?"function: " A_ThisFunc "()":"") A_Tab (IsLabel(A_ThisLabel)?"label: " A_ThisLabel:""), file: A_LineFile, line: A_LineNumber, message: "Invalid memory read.", extra: "Val='" Num "' at offset " this.Position " of " this.Length-1}
+		this.Position+=8
 		Return Num
 	}
 	ReadFloat(){
-		Num:=NumGet(this.Address+0, this.Position, "Float"), this.Position+=4
+		If (this.Position+4>this.Length) OR ((Num:=NumGet(this.Address+0, this.Position, "Float"))="")
+			throw { what: (IsFunc(A_ThisFunc)?"function: " A_ThisFunc "()":"") A_Tab (IsLabel(A_ThisLabel)?"label: " A_ThisLabel:""), file: A_LineFile, line: A_LineNumber, message: "Invalid memory read.", extra: "Val='" Num "' at offset " this.Position " of " this.Length-1}
+		this.Position+=4
 		Return Num
 	}
 	ReadPtr(){
-		Num:=NumGet(this.Address+0, this.Position, "Ptr"), this.Position+=A_PtrSize
+		If (this.Position+A_PtrSize>this.Length) OR ((Num:=NumGet(this.Address+0, this.Position, "Ptr"))="")
+			throw { what: (IsFunc(A_ThisFunc)?"function: " A_ThisFunc "()":"") A_Tab (IsLabel(A_ThisLabel)?"label: " A_ThisLabel:""), file: A_LineFile, line: A_LineNumber, message: "Invalid memory read.", extra: "Val='" Num "' at offset " this.Position " of " this.Length-1}
+		this.Position+=A_PtrSize
 		Return Num
 	}
 	ReadUPtr(){
-		Num:=NumGet(this.Address+0, this.Position, "UPtr"), this.Position+=A_PtrSize
+		If (this.Position+A_PtrSize>this.Length) OR ((Num:=NumGet(this.Address+0, this.Position, "UPtr"))="")
+			throw { what: (IsFunc(A_ThisFunc)?"function: " A_ThisFunc "()":"") A_Tab (IsLabel(A_ThisLabel)?"label: " A_ThisLabel:""), file: A_LineFile, line: A_LineNumber, message: "Invalid memory read.", extra: "Val='" Num "' at offset " this.Position " of " this.Length-1}
+		this.Position+=A_PtrSize
 		Return Num
 	}
 	WriteUInt(Number){
+		If (Number="") OR (this.Position+4>this.Length)
+			throw { what: (IsFunc(A_ThisFunc)?"function: " A_ThisFunc "()":"") A_Tab (IsLabel(A_ThisLabel)?"label: " A_ThisLabel:""), file: A_LineFile, line: A_LineNumber, message: "Invalid memory write.", extra: "Number='" Number "' at offset " this.Position " of " this.Length-1}
 		NumPut(Number, this.Address+0, this.Position, "UInt"), this.Position+=4
 		Return 4
 	}
 	WriteDWORD(Number){
+		If (Number="") OR (this.Position+4>this.Length)
+			throw { what: (IsFunc(A_ThisFunc)?"function: " A_ThisFunc "()":"") A_Tab (IsLabel(A_ThisLabel)?"label: " A_ThisLabel:""), file: A_LineFile, line: A_LineNumber, message: "Invalid memory write.", extra: "Number='" Number "' at offset " this.Position " of " this.Length-1}
 		NumPut(Number, this.Address+0, this.Position, "UInt"), this.Position+=4
 		Return 4
 	}
 	WriteInt(Number){
+		If (Number="") OR (this.Position+4>this.Length)
+			throw { what: (IsFunc(A_ThisFunc)?"function: " A_ThisFunc "()":"") A_Tab (IsLabel(A_ThisLabel)?"label: " A_ThisLabel:""), file: A_LineFile, line: A_LineNumber, message: "Invalid memory write.", extra: "Number='" Number "' at offset " this.Position " of " this.Length-1}
 		NumPut(Number, this.Address+0, this.Position, "Int"), this.Position+=4
 		Return 4
 	}
 	WriteLong(Number){
+		If (Number="") OR (this.Position+4>this.Length)
+			throw { what: (IsFunc(A_ThisFunc)?"function: " A_ThisFunc "()":"") A_Tab (IsLabel(A_ThisLabel)?"label: " A_ThisLabel:""), file: A_LineFile, line: A_LineNumber, message: "Invalid memory write.", extra: "Number='" Number "' at offset " this.Position " of " this.Length-1}
 		NumPut(Number, this.Address+0, this.Position, "Int"), this.Position+=4
 		Return 4
 	}
 	WriteInt64(Number){
+		If (Number="") OR (this.Position+8>this.Length)
+			throw { what: (IsFunc(A_ThisFunc)?"function: " A_ThisFunc "()":"") A_Tab (IsLabel(A_ThisLabel)?"label: " A_ThisLabel:""), file: A_LineFile, line: A_LineNumber, message: "Invalid memory write.", extra: "Number='" Number "' at offset " this.Position " of " this.Length-1}
 		NumPut(Number, this.Address+0, this.Position, "Int64"), this.Position+=8
 		Return 8
 	}
 	WriteShort(Number){
+		If (Number="") OR (this.Position+2>this.Length)
+			throw { what: (IsFunc(A_ThisFunc)?"function: " A_ThisFunc "()":"") A_Tab (IsLabel(A_ThisLabel)?"label: " A_ThisLabel:""), file: A_LineFile, line: A_LineNumber, message: "Invalid memory write.", extra: "Number='" Number "' at offset " this.Position " of " this.Length-1}
 		NumPut(Number, this.Address+0, this.Position, "Short"), this.Position+=2
 		Return 2
 	}
 	WriteUShort(Number){
+		If (Number="") OR (this.Position+2>this.Length)
+			throw { what: (IsFunc(A_ThisFunc)?"function: " A_ThisFunc "()":"") A_Tab (IsLabel(A_ThisLabel)?"label: " A_ThisLabel:""), file: A_LineFile, line: A_LineNumber, message: "Invalid memory write.", extra: "Number='" Number "' at offset " this.Position " of " this.Length-1}
 		NumPut(Number, this.Address+0, this.Position, "UShort"), this.Position+=2
 		Return 2
 	}
 	WriteWORD(Number){
+		If (Number="") OR (this.Position+2>this.Length)
+			throw { what: (IsFunc(A_ThisFunc)?"function: " A_ThisFunc "()":"") A_Tab (IsLabel(A_ThisLabel)?"label: " A_ThisLabel:""), file: A_LineFile, line: A_LineNumber, message: "Invalid memory write.", extra: "Number='" Number "' at offset " this.Position " of " this.Length-1}
 		NumPut(Number, this.Address+0, this.Position, "UShort"), this.Position+=2
 		Return 2
 	}
 	WriteChar(Number){
+		If (Number="") OR (this.Position+1>this.Length)
+			throw { what: (IsFunc(A_ThisFunc)?"function: " A_ThisFunc "()":"") A_Tab (IsLabel(A_ThisLabel)?"label: " A_ThisLabel:""), file: A_LineFile, line: A_LineNumber, message: "Invalid memory write.", extra: "Number='" Number "' at offset " this.Position " of " this.Length-1}
 		NumPut(Number, this.Address+0, this.Position, "Char"), this.Position++
 		Return 1
 	}
 	WriteUChar(Number){
+		If (Number="") OR (this.Position+1>this.Length)
+			throw { what: (IsFunc(A_ThisFunc)?"function: " A_ThisFunc "()":"") A_Tab (IsLabel(A_ThisLabel)?"label: " A_ThisLabel:""), file: A_LineFile, line: A_LineNumber, message: "Invalid memory write.", extra: "Number='" Number "' at offset " this.Position " of " this.Length-1}
 		NumPut(Number, this.Address+0, this.Position, "UChar"), this.Position++
 		Return 1
 	}
 	WriteBYTE(Number){
+		If (Number="") OR (this.Position+1>this.Length)
+			throw { what: (IsFunc(A_ThisFunc)?"function: " A_ThisFunc "()":"") A_Tab (IsLabel(A_ThisLabel)?"label: " A_ThisLabel:""), file: A_LineFile, line: A_LineNumber, message: "Invalid memory write.", extra: "Number='" Number "' at offset " this.Position " of " this.Length-1}
 		NumPut(Number, this.Address+0, this.Position, "UChar"), this.Position++
 		Return 1
 	}
 	WriteDouble(Number){
+		If (Number="") OR (this.Position+8>this.Length)
+			throw { what: (IsFunc(A_ThisFunc)?"function: " A_ThisFunc "()":"") A_Tab (IsLabel(A_ThisLabel)?"label: " A_ThisLabel:""), file: A_LineFile, line: A_LineNumber, message: "Invalid memory write.", extra: "Number='" Number "' at offset " this.Position " of " this.Length-1}
 		NumPut(Number, this.Address+0, this.Position, "Double"), this.Position+=8
 		Return 8
 	}
 	WriteFloat(Number){
+		If (Number="") OR (this.Position+4>this.Length)
+			throw { what: (IsFunc(A_ThisFunc)?"function: " A_ThisFunc "()":"") A_Tab (IsLabel(A_ThisLabel)?"label: " A_ThisLabel:""), file: A_LineFile, line: A_LineNumber, message: "Invalid memory write.", extra: "Number='" Number "' at offset " this.Position " of " this.Length-1}
 		NumPut(Number, this.Address+0, this.Position, "Float"), this.Position+=4
 		Return 4
 	}
 	WritePtr(Number){
+		If (Number="") OR (this.Position+A_PtrSize>this.Length)
+			throw { what: (IsFunc(A_ThisFunc)?"function: " A_ThisFunc "()":"") A_Tab (IsLabel(A_ThisLabel)?"label: " A_ThisLabel:""), file: A_LineFile, line: A_LineNumber, message: "Invalid memory write.", extra: "Number='" Number "' at offset " this.Position " of " this.Length-1}
 		NumPut(Number, this.Address+0, this.Position, "Ptr"), this.Position+=A_PtrSize
 		Return A_PtrSize
 	}
 	WriteUPtr(Number){
+		If (Number="") OR (this.Position+A_PtrSize>this.Length)
+			throw { what: (IsFunc(A_ThisFunc)?"function: " A_ThisFunc "()":"") A_Tab (IsLabel(A_ThisLabel)?"label: " A_ThisLabel:""), file: A_LineFile, line: A_LineNumber, message: "Invalid memory write.", extra: "Number='" Number "' at offset " this.Position " of " this.Length-1}
 		NumPut(Number, this.Address+0, this.Position, "UPtr"), this.Position+=A_PtrSize
 		Return A_PtrSize
 	}
