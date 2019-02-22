@@ -1,4 +1,24 @@
-﻿;////////////////////////////////////////////////
+;
+; AutoHotkey Version: 1.1.30.01
+; Language:       English
+; Platform:       Optimized for Windows 10
+; Author:         Sam.
+;
+
+;;;;;	Reference Documents	;;;;;
+; https://www.autohotkey.com/boards/viewtopic.php?f=6&t=62067
+; https://autohotkey.com/docs/objects/File.htm
+; https://docs.microsoft.com/en-us/windows/desktop/devnotes/rtlmovememory
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;          MemoryFileIO          ;;;;;
+;;;;;  Copyright (c) 2016-2019 Sam.  ;;;;;
+;;;;;     Last Updated 20190222      ;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;////////////////////////////////////////////////
 ;///////////// Class MemoryFileIO ///////////////
 ;////////////////////////////////////////////////
 ;;; Provides Input/Output File Object syntax for in-memory files.
